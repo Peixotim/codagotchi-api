@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ChaosEntity } from 'src/chaos/entity/chaos.entity';
 import { ConfigModule } from '@nestjs/config';
+import { ChaosModule } from 'src/chaos/chaos.module';
+import { HealthModule } from 'src/health/health.module';
 
 @Module({
   imports: [
@@ -21,6 +23,8 @@ import { ConfigModule } from '@nestjs/config';
       synchronize: true, //Somente em testes
       entities: [ChaosEntity],
     }),
+    ChaosModule,
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
