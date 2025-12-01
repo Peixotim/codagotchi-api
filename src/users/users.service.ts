@@ -1,5 +1,6 @@
 import {
   BadGatewayException,
+  ConflictException,
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
@@ -15,10 +16,30 @@ export class UsersService {
     private readonly userRepository: Repository<UsersEntity>,
   ) {}
 
+  public async findByMail(mail: string): Promise<UsersEntity | null> {
+    const user = await this.userRepository.findOne({
+      where: { mail: mail },
+    });
+
+    if (!user) {
+      return null;
+    }
+
+    return user;
+  }
+
   public async createUser(request: UsersCreate): Promise<UsersEntity> {
+    const user = await this.findByMail(request.mail);
+
     if (!request) {
       throw new BadGatewayException(
         `Error, you're not passing anything in the request!`,
+      );
+    }
+
+    if (user) {
+      throw new ConflictException(
+        'Error, an account with this email already exists.',
       );
     }
 
