@@ -37,6 +37,7 @@ export class ChaosService {
       //   throw new BadRequestException('Invalid or expired token');
       // }
       // throw error;
+      throw error;
     }
   }
 }
