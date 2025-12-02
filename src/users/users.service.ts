@@ -59,6 +59,10 @@ export class UsersService {
       return savedUser;
     } catch (err) {
       const erro = err as Error;
+      console.error('❌ ERRO NO BANCO DE DADOS:', {
+        message: erro.message,
+        name: erro.name,
+      });
       throw new InternalServerErrorException(erro);
     }
   }
