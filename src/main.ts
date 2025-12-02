@@ -3,6 +3,7 @@ import { AppModule } from './app/app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { WinstonModule } from 'nest-winston';
 import { loggerConfig } from './config/logger.config';
+import { WsAdapter } from '@nestjs/platform-ws';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -18,6 +19,7 @@ async function bootstrap() {
       transform: true,
     }),
   );
+  app.useWebSocketAdapter(new WsAdapter(app));
   app.useLogger(WinstonModule.createLogger(loggerConfig));
 }
 bootstrap();
