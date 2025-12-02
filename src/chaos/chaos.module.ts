@@ -8,5 +8,6 @@ import { ChaosEntity } from './entity/chaos.entity';
 @Module({
   imports: [AuthModule, TypeOrmModule.forFeature([ChaosEntity])],
   providers: [ChaosGateway, ChaosService],
+  exports: [ChaosGateway],
 })
 export class ChaosModule {}
